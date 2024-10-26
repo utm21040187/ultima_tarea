@@ -1,6 +1,12 @@
 import { Schema, model} from "mongoose";
 
-const EventSchema = new ([
+const EventSchema = new Schema([
+    {
+        name: {
+            type: String,
+            requiered: true
+        }
+    },
     {
         metrics:[
             {
@@ -8,7 +14,7 @@ const EventSchema = new ([
                     type:String, 
                     required:true
                 }, 
-                max_poiints:{
+                max_points:{
                     type:Number,
                     required:true
                 }
@@ -16,9 +22,15 @@ const EventSchema = new ([
         ]
     },
     {
-        ronda:{
+        maxRound: {
+            type: Number,
+            requiered: true
+        }
+    },
+    {
+        round:{
             type:Number,
-            required:true
+            default:0
         }
     },
     {
@@ -26,18 +38,14 @@ const EventSchema = new ([
             type:String,
             enum:["pending","active","Done"],
             lowercase:true,
-            required:true
+            default:"pending"
         }
     },
     {
-        groups:[
-
-        ]
+        groups:[]
     },
     {
-        judges:[
-
-        ]
+        judges:[]
     }
 ]);
 

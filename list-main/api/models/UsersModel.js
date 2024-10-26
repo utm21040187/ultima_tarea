@@ -1,29 +1,38 @@
 import { Schema, model} from "mongoose";
 
-const UserSchema = new ([
+const UserSchema = new Schema([
     {
-        Name: {
+        name: {
             type: String, 
             requiered: true
         }
-    },{
-        Mail: {
+    },
+    {
+        password: {
             type: String,
             requiered: true
         }
     },
     {
-        Curp: {
+        email: {
+            type: String,
+            requiered: true
+        }
+    },
+    {
+        CURP: {
             type:String,
             requiered: true
         }
     },
     {
-        Rol:{
+        rol:{
             type: String,
+            enum:["administrator","participant","judge"],
+            lowercase: true,
             requiered: true
         }
     }
 ])
 
-export const UserModel = model("events", UserSchema);
+export const UserModel = model("users", UserSchema);
