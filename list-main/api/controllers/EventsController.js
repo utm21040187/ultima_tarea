@@ -2,7 +2,7 @@
 //Actualizar
 //Cambiar status
 //Cambiar de ronda (Eliminar a los equipos)
-import { EventModel } from "../models/EventsModel";
+import { EventModel } from "../models/EventsModel.js";
 
 export default{
     createEvent: async (req,res)=>{

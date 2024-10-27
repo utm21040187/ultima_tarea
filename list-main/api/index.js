@@ -4,7 +4,8 @@ import helmet from "helmet"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 dotenv.config();
-import UsersController from "./controllers/UsersController"
+import UsersController from "./controllers/UsersController.js"
+import EventsController from "./controllers/EventsController.js"
 
 const app = express()
 
@@ -18,8 +19,9 @@ app.get("/", (req,res)=>{
     res.send("Hola desde mi servidor")
 })
 
-app.post("/user/register", UserController.register)
-app.post("/user/login", UserController.login)
-app.put("/user/update-profile", UserController.update-profile)
+app.post("/user/register", UsersController.register)
+app.post("/user/login", UsersController.login)
+app.put("/user/update-profile", UsersController.updateProfile)
+app.post("/event/create", EventsController.createEvent)
 
 app.listen(4000,()=>console.log("Server is running"))

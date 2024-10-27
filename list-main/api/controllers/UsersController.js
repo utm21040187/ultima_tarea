@@ -62,7 +62,7 @@ export default{
         user.email = req.body.email ? req.body.email : user.email;
 
         await UserModel.findOneAndUpdate(user._id)
-        return res.status(200).json({"Perfil actualizado con exito"})
+        return res.status(200).json({msg:"Perfil actualizado con exito"});
     }
     catch(error){
         res.status(500).json({msg:"Ocurrio un error al registrarte"});
