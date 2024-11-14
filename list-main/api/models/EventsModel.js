@@ -36,7 +36,7 @@ const EventSchema = new Schema([
     {
         status:{
             type:String,
-            enum:["pending","active","Done"],
+            enum:["pending","active","done"],
             lowercase:true,
             default:"pending"
         }

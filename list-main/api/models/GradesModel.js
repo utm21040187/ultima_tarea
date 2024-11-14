@@ -31,7 +31,8 @@ const GradesSchema = new Schema([
             id_judge:{
                 type: Schema.Types.ObjectId,
                 requiered: true
-            }
+            },
+            
     }]
 }
 ])

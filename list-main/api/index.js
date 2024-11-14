@@ -23,5 +23,6 @@ app.post("/user/register", UsersController.register)
 app.post("/user/login", UsersController.login)
 app.put("/user/update-profile", UsersController.updateProfile)
 app.post("/event/create", EventsController.createEvent)
+app.post("/event")
 
 app.listen(4000,()=>console.log("Server is running"))
