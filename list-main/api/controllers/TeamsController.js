@@ -1,8 +1,8 @@
 //Crear equipo
 //Inscribirse al evento
 
-import { EventModel } from "../models/EventsModel";
-import { TeamModel } from "../models/TeamsModel";
+
+import { TeamsModel } from "../models/TeamsModel.js";
 
 export default{
     createTeam: async (req,res)=>{
@@ -12,7 +12,7 @@ export default{
             id_members:req.body.id_members,
             leader:req.body.leader
         };
-        await TeamModel.create(team);
+        await TeamsModel.create(team);
         return res.status(200).json({msg:"Grupo creado con exito"})
     }catch (error){
         console.log(error);
@@ -22,7 +22,7 @@ export default{
     registerEvent: async(req,res)=>{
         try{
         const id_Group = req.params.id;
-        const groups = await TeamModel.findById(id_Group);
+        const groups = await TeamsModel.findById(id_Group);
         if (!teams){
             return res.status(400).json({msg:"El equipo no existe"})
         }

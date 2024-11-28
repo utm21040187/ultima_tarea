@@ -4,25 +4,25 @@ const UserSchema = new Schema([
     {
         name: {
             type: String, 
-            requiered: true
+            required: true
         }
     },
     {
         password: {
             type: String,   
-            requiered: true
+            required: true
         }
     },
     {
         email: {
             type: String,
-            requiered: true
+            required: true
         }
     },
     {
         CURP: {
             type:String,
-            requiered: true
+            required: true
         }
     },
     {
@@ -30,9 +30,9 @@ const UserSchema = new Schema([
             type: String,
             enum:["administrator","participant","judge"],
             lowercase: true,
-            requiered: true
+            required: true
         }
     }
 ])
 
-export const UserModel = model("users", UserSchema);
+export const UsersModel = model("users", UserSchema);

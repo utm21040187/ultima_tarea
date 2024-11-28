@@ -4,7 +4,7 @@ const TeamsSchema = new Schema([
     {
         name: {
             type: String,
-            requiered: true
+            required: true
         }
     },
     {
@@ -12,8 +12,8 @@ const TeamsSchema = new Schema([
     },
     {
         lider:{
-        type: Schema.Types.ObjaectId,
-        requiered: true
+        type: Schema.Types.ObjectId,
+        required: true
         }
     },
     {
@@ -23,9 +23,8 @@ const TeamsSchema = new Schema([
         }
     },
     {
-        grade:[],
-        requiered: true
+        grades:[]
     },
 ])
 
-export const TeamModel = model("teams", TeamsSchema);
+export const TeamsModel = model("teams", TeamsSchema);

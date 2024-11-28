@@ -2,9 +2,9 @@
 //Actualizar
 //Cambiar status
 //Cambiar de ronda (Eliminar a los equipos)
-import { EventModel } from "../models/EventsModel.js";
-import { GradeModel } from "../models/GradesModel.js";
-import {TeamsModel } from "../models/TeamsModel.js"
+import { EventsModel } from "../models/EventsModel.js";
+import { GradesModel } from "../models/GradesModel.js";
+import { TeamsModel } from "../models/TeamsModel.js";
 
 const validateEvent = (metrics, name, maxRound) => {
     const data = {
@@ -67,7 +67,7 @@ export default {
                 metrics: req.body.metrics,
                 maxRound: req.body.maxRound,
             };
-            await EventModel.create(event);
+            await EventsModel.create(event);
             res.status(200).json({ msg: "Evento creado con exito" })
         } catch (error) {
             console.log(error);
@@ -77,7 +77,7 @@ export default {
     upateEvent: async (req, res) => {
         try{
         const idEvent = req.params.id;
-        const event = await EventModel.findById(idEvent);
+        const event = await s.findById(idEvent);
         if (!event) {
             return res.status(400).json({ msg: "El evento no existe" });
         }
@@ -86,7 +86,7 @@ export default {
             if(!isValid){
                 return res.status(400).json({msg})
             }
-            await EventModel.findByIdAndUpdate(idEvent,{
+            await EventsModel.findByIdAndUpdate(idEvent,{
                 $set:{
                     metrics,
                     name,
@@ -100,14 +100,14 @@ export default {
     changeStatus: async (req,res)=>{
         try{
         const idEvent = req.params.id;
-        const event = await EventModel.findById(idEvent);
+        const event = await s.findById(idEvent);
         if(!event){
             return res.status(400).json({msg:"Evento no encontrado"})
         }
         if(!["pending","active","done"].includes(req.body.status.toLowerCase())){
             return res.status(400).json({msg:"El status que envias no es aceptable."})
         }
-        await EventModel.findByIdAndUpdate(idEvent,{
+        await EventsModel.findByIdAndUpdate(idEvent,{
             $set:{
                 status:req.body.status
             }
@@ -120,7 +120,7 @@ export default {
     changeRound: async (req,res)=>{
         try{
         const idEvent = req.params.id;
-        const event = await EventModel.findById(idEvent);
+        const event = await EventsModel.findById(idEvent);
         if(!event){
             return res.status(400).json({msg:"Evento no encontrado"})
         }

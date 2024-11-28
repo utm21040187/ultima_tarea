@@ -4,36 +4,36 @@ const GradesSchema = new Schema([
     {
         id_group:{
             type: Schema.Types.ObjectId,
-        requiered: true}
+        required: true}
     },
     {
         round:{
             type: Number,
-            requiered: true
+            required: true
         }
     },
     {
         id_event:{
         type: Schema.Types.ObjectId,
-        requiered: true
+        required: true
         }
     },
     {
         grades:[{
             id_metric:{
                 type: Schema.Types.ObjectId,
-                requiered: true
+                required: true
             },
             grade:{
                 type: Number,
-                requiered: true
+                required: true
             },
             id_judge:{
                 type: Schema.Types.ObjectId,
-                requiered: true
+                required: true
             },
             
     }]
 }
 ])
-export const GradeModel = model("grades", GradesSchema);
+export const GradesModel = model("grades", GradesSchema);

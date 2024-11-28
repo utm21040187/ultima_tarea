@@ -4,7 +4,7 @@ const EventSchema = new Schema([
     {
         name: {
             type: String,
-            requiered: true
+            required: true
         }
     },
     {
@@ -24,7 +24,7 @@ const EventSchema = new Schema([
     {
         maxRound: {
             type: Number,
-            requiered: true
+            required: true
         }
     },
     {
@@ -49,4 +49,4 @@ const EventSchema = new Schema([
     }
 ]);
 
-export const EventModel = model("events", EventSchema);
+export const EventsModel = model("events", EventSchema);

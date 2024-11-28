@@ -1,5 +1,5 @@
 import { EventModel } from "../models/EventsModel.js";
-import { GradeModel } from "../models/GradesModel.js";
+import { GradesModel } from "../models/GradesModel.js";
 
 //Crear calificaciones
 //Devolverlas 
@@ -30,7 +30,7 @@ export default {
             }
             // Validar que la calificacion exista
             const gradesFromDb = await GradeModel.findOne({id_event:event._id, round:round,id_group:group._id});
-            gradesFromDb.grades.filter((garde)=>{
+            gradesFromDb.grades.filter((grade)=>{
                 grade.id_judge == req.body.id_judge
             })
            // Calificaciones
