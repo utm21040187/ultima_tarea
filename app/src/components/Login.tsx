@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import axios, { AxiosError } from "axios";
 
 export const Login = () => {
-    const navigate = useNavigate()
+
     const [data, setData] = useState({});
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +21,7 @@ export const Login = () => {
             Swal.showLoading();
             const response = await axios.post("http://localhost:4000/user/login", data);
             Swal.fire("Inicio de sesion exitoso", response.data, "success");
-            navigate('/home')
+          //  navigate('/home') //
         } catch (error: any) {
             Swal.fire("Hay un error al enviar", error.response.data.msg, "error")
         }
@@ -53,15 +53,10 @@ export const Login = () => {
                         </Row>
                         <Row>
                             <Col>¿Olvidaste tu contraseña? Recupérala <a href="#">aquí</a></Col>
-                            <Col>¿No tienes cuenta? Regístrate <a href="/register">aquí</a></Col>
+                            <Col>¿No tienes cuenta? Regístrate <a href="/register-participants">aquí</a></Col>
                         </Row>
                     </Card.Body>
                 </Card>
-                <ul>
-                    <li><a href="/">login</a></li>
-                    <li><a href="/register">registerParticipant</a></li>
-                    <li><a href="/createEvent">createEvent</a></li>
-                </ul>
             </Container>
         </>
     )

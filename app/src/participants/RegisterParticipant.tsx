@@ -42,7 +42,7 @@ export const RegisterParticipant = () => {
             >
                 <Card style={{ width: '25rem' }}>
                     <Card.Body>
-                        <Card.Title className="text-center">Registrate mi rey</Card.Title>
+                        <Card.Title className="text-center">Registrate c:</Card.Title>
                         <Form>
                             <Form.Group>
                                 <Form.Label>Nombre</Form.Label>

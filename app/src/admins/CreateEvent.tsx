@@ -1,118 +1,115 @@
-import { useState } from "react";
-import { Container, Card, Form, Row, Col, Button } from "react-bootstrap";
-import Swal from "sweetalert2";
-import axios from "axios";
-
-interface IEvent {
-    name: string;
-    max_round: number;
-    metrics: Array<{ description: string; max_points: number }>;
-}
+import axios from 'axios';
+import React, { useState } from 'react'
+import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
+import{Trash}from 'react-bootstrap-icons'
+import Swal from 'sweetalert2';
+import { IEvent } from '../Types';
 
 export const CreateEvent = () => {
-    const [data, setData] = useState<IEvent>({
+    const emptyMetric = {
+        description: "",
+        max_points: 0
+    }
+    const [event, setEvent] = useState<IEvent>({
         name: "",
-        max_round: 0,
-        metrics: []
-    });
-    const [inpMetrics, setInpMetrics] = useState([1]);
+        maxRound: 0,
+        metrics: [emptyMetric]
+    })
+const onChangeBasicFields =(e:React.ChangeEvent<HTMLInputElement>)=>{
+e.preventDefault()
+const data : any = event
+data[e.target.name] = e.target.value
+setEvent({...data})
+}
 
-    const onChange = (e: React.ChangeEvent<any>, index: number) => {
-        const { name, value } = e.target;
-        const updatedMetrics = [...data.metrics];
-        updatedMetrics[index] = { ...updatedMetrics[index], [name]: value };
-        setData({ ...data, metrics: updatedMetrics });
-        console.log(data)
-    };
+const onChangeMetric = (e:React.ChangeEvent<HTMLInputElement>,
+    i:number)=>{
+        e.preventDefault()
+        const data: any = event
+        data.metrics[i][e.target.name]
+    }
+    const addMetric = () => {
+        const data = event;
+        data.metrics.push(emptyMetric);
+        setEvent({ ...data })
+    }
 
-    const onSubmit = async () => {
-        try {
-            Swal.fire("Enviando datos");
-            Swal.showLoading();
-            await axios.post("http://localhost:4000/event/create", data);
-            Swal.fire("Datos guardados con exito", "", "success");
-        } catch (error: any) {
-            Swal.fire("Hay un error al guardar", error.response.data.msg, "error");
-        }
-    };
-
-    const add = () => {
-        const newMetric = { description: "", max_points: 0 };
-        setData({ ...data, metrics: [...data.metrics, newMetric] });
-        setInpMetrics([...inpMetrics, inpMetrics.length + 1]);
-    };
+    const removeMetric =(iM: number)=>{
+        const data = event
+        const metricsFiltered = data.metrics.filter((_,i) =>i != iM);
+        data.metrics = metricsFiltered
+        setEvent({...data})
+    }
+ const onSubmit = async () =>{
+    try{
+     Swal.fire("Guardando evento...")
+     Swal.showLoading()
+     await axios.post("http://localhost:4000/event/create",event)
+     Swal.fire("Evento registrado con exito", "", "success")
+    }catch(error){
+        Swal.fire("Ocurrió un error","","error")
+    }
+ }
 
     return (
-        <Container className="d-flex justify-content-center align-items-center vh-100">
-            <Card style={{ width: '40rem' }}>
+        <Container>a
+            <Card className='m-3'>
                 <Card.Body>
-                    <Card.Title className="text-center mb-3">Crear un Evento</Card.Title>
+                    <Card.Title>Crear evento</Card.Title>
                     <Form>
-                        <Row className="mb-3">
+                        <Row className='mb-3'>
                             <Col>
                                 <Form.Group>
-                                    <Form.Label>Nombre del evento</Form.Label>
-                                    <Form.Control
-                                        onChange={(e) => setData({ ...data, name: e.target.value })}
-                                        name="name"
-                                    />
+                                    <Form.Label>Titulo del evento</Form.Label>
+                                    <Form.Control onChange={onChangeBasicFields}name="title" />
                                 </Form.Group>
                             </Col>
                             <Col>
                                 <Form.Group>
-                                    <Form.Label>Rondas</Form.Label>
-                                    <Form.Control
-                                        onChange={(e) => setData({ ...data, max_round: Number(e.target.value) })}
-                                        name="max_round"
-                                        type="number"
-                                    />
+                                    <Form.Label>Numero de rondas</Form.Label>
+                                    <Form.Control onChange={onChangeBasicFields} name="maxRound" type='number' />
                                 </Form.Group>
                             </Col>
                         </Row>
-                        <h5 className="mt-2 mb-3">Metricas</h5>
-                        <Row name="metrics">
-                            {inpMetrics.map((value, index) => (
-                                <Row className="mb-3" key={index}>
-                                    <Col>
-                                        <Form.Group>
-                                            <Form.Label>Descripcion</Form.Label>
-                                            <Form.Control
-
-                                                onChange={(e) => onChange(e, index)}
-                                                name="description"
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        <Form.Group>
-                                            <Form.Label>Puntos</Form.Label>
-                                            <Form.Control
-
-                                                onChange={(e) => onChange(e, index)}
-                                                name="max_points"
-                                                type="number"
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
-                            ))}
+                        <Row>
+                            <Form.Group className='text-center'>
+                                <Form.Label>Metricas:</Form.Label>
+                                {
+                                    event.metrics.map((metric, i) => (
+                                        <Row className='mb-3' key={i}>
+                                            <Col>
+                                                <Form.Label>Descripción:</Form.Label>
+                                                <Form.Control onChange={(e:any)=>
+                                                    onChangeMetric(e,i)}name="description" />
+                                            </Col>
+                                            <Col>
+                                                <Form.Label>Calificación maxima:</Form.Label>
+                                                <Form.Control onChange={(e:any)=>
+                                                    onChangeMetric(e,i)} type='number' name="max_points" />
+                                            </Col>
+                                            {
+                                                event.metrics.length > 1 && (
+                                                    <Col xs={1}>
+                                                    <Button onClick={()=>removeMetric(i)}variant='danger'><Trash/></Button>
+                                                    </Col>
+                                                )
+                                            }
+                                           
+                                        </Row>
+                                    ))
+                                }
+                                <div className='text-center'>
+                                    <Button variant='info' onClick={() => addMetric()}>Agregar metrica</Button>
+                                </div>
+                            </Form.Group>
                         </Row>
-                        <Button onClick={add}>+</Button>
-                        <Row className="mb-3 mt-3 text-center">
-                            <Col className="d-grid">
-                                <Button className="btn btn-success" onClick={onSubmit}>
-                                    Ingresar
-                                </Button>
-                            </Col>
-                        </Row>
+                        <hr></hr>
+                        <div className='text-center'>
+                            <Button onClick={()=>onSubmit()}>Guardar evento</Button>
+                        </div>
                     </Form>
                 </Card.Body>
             </Card>
-            <ul>
-                <li><a href="/">login</a></li>
-                <li><a href="/register">registerParticipant</a></li>
-                <li><a href="/createEvent">createEvent</a></li>
-            </ul>
         </Container>
-    );
-};
+    )
+}
